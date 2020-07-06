@@ -1,6 +1,5 @@
 package com.nnk.springboot.config;
 
-import com.nnk.springboot.services.MyAppUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,28 +9,40 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.nnk.springboot.services.MyAppUserDetailsService;
+
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled=true)
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private MyAppUserDetailsService myAppUserDetailsService;
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/bidList/**", "/rating/**", "/ruleName/**", "/trade/**", "/curvePoint/**").hasAnyAuthority("ADMIN", "USER")
-                .antMatchers("/user/**").permitAll()
-                .and().formLogin()  //login configuration
-                .defaultSuccessUrl("/bidList/list")
-                .and().logout()    //logout configuration
-                .logoutUrl("/app-logout")
-                .logoutSuccessUrl("/")
-                .and().exceptionHandling() //exception handling configuration
-                .accessDeniedPage("/app/error");
-    }
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        auth.userDetailsService(myAppUserDetailsService).passwordEncoder(passwordEncoder);
-    }
+	@Autowired
+	private MyAppUserDetailsService myAppUserDetailsService;
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/bidList/**", "/rating/**", "/ruleName/**", "/trade/**", "/curvePoint/**")
+				.hasAnyAuthority("ADMIN", "USER").antMatchers("/user/**").permitAll().and().formLogin() // login
+																										// configuration
+				.defaultSuccessUrl("/bidList/list").and().logout() // logout configuration
+				.logoutUrl("/app-logout").logoutSuccessUrl("/").and().exceptionHandling() // exception handling
+																							// configuration
+				.accessDeniedPage("/app/error");
+	}
+
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		auth.userDetailsService(myAppUserDetailsService).passwordEncoder(passwordEncoder);
+
+	}
+
+	/*
+	 * @Override protected void configure(AuthenticationManagerBuilder auth) throws
+	 * Exception { PasswordEncoder encoder =
+	 * PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	 * auth.inMemoryAuthentication().withUser("user").password(encoder.encode(
+	 * "password")).roles("USER").and()
+	 * .withUser("admin").password(encoder.encode("admin")).roles("USER", "ADMIN");
+	 * }
+	 */
 }
