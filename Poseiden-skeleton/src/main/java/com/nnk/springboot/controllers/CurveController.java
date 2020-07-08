@@ -23,7 +23,6 @@ public class CurveController {
 
 	@RequestMapping("/curvePoint/list")
 	public String home(Model model) {
-		// TODO: find all Curve Point, add to model
 		model.addAttribute("allCurvePoint", curvePointService.findAllcurvePoint());
 		return "curvePoint/list";
 	}
@@ -36,7 +35,6 @@ public class CurveController {
 	@PostMapping("/curvePoint/validate")
 	public String validate(@Valid @ModelAttribute("curvePoint") CurvePoint curvePoint, BindingResult result,
 			Model model) {
-		// TODO: check data valid and save to db, after saving return Curve list
 		if (!result.hasErrors()) {
 			curvePointService.addcurvePoint(curvePoint);
 			model.addAttribute("allCurvePoint", curvePointService.findAllcurvePoint());
@@ -47,7 +45,6 @@ public class CurveController {
 
 	@GetMapping("/curvePoint/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-		// TODO: get CurvePoint by Id and to model then show to the form
 		CurvePoint curvePoint = curvePointService.getCurvePointById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid bidList Id:" + id));
 
@@ -58,8 +55,6 @@ public class CurveController {
 	@PostMapping("/curvePoint/update/{id}")
 	public String updateBid(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result,
 			Model model) {
-		// TODO: check required fields, if valid call service to update Curve and return
-		// Curve list
 		if (!result.hasErrors()) {
 			curvePointService.addcurvePoint(curvePoint);
 			model.addAttribute("allCurvePoint", curvePointService.findAllcurvePoint());
@@ -70,7 +65,6 @@ public class CurveController {
 
 	@GetMapping("/curvePoint/delete/{id}")
 	public String deleteBid(@PathVariable("id") Integer id, Model model) {
-		// TODO: Find Curve by Id and delete the Curve, return to Curve list
 		curvePointService.deletecurvePoint(id);
 		model.addAttribute("allCurvePoint", curvePointService.findAllcurvePoint());
 		return "redirect:/curvePoint/list";

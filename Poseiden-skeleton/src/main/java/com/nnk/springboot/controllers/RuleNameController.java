@@ -17,14 +17,12 @@ import com.nnk.springboot.services.RuleNameService;
 
 @Controller
 public class RuleNameController {
-	// TODO: Inject RuleName service
 
 	@Autowired
 	private RuleNameService ruleNameService;
 
 	@RequestMapping("/ruleName/list")
 	public String home(Model model) {
-		// TODO: find all RuleName, add to model
 		model.addAttribute("allRuleName", ruleNameService.findAllRuleName());
 		return "ruleName/list";
 	}
@@ -36,7 +34,6 @@ public class RuleNameController {
 
 	@PostMapping("/ruleName/validate")
 	public String validate(@Valid @ModelAttribute("ruleName") RuleName ruleName, BindingResult result, Model model) {
-		// TODO: check data valid and save to db, after saving return RuleName list
 		if (!result.hasErrors()) {
 			ruleNameService.addRuleName(ruleName);
 			model.addAttribute("allRuleName", ruleNameService.findAllRuleName());
@@ -47,7 +44,6 @@ public class RuleNameController {
 
 	@GetMapping("/ruleName/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-		// TODO: get RuleName by Id and to model then show to the form
 		RuleName ruleName = ruleNameService.getRuleNameById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
 
@@ -58,8 +54,6 @@ public class RuleNameController {
 	@PostMapping("/ruleName/update/{id}")
 	public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName, BindingResult result,
 			Model model) {
-		// TODO: check required fields, if valid call service to update RuleName and
-		// return RuleName list
 		if (!result.hasErrors()) {
 			ruleNameService.addRuleName(ruleName);
 			model.addAttribute("allRuleName", ruleNameService.findAllRuleName());

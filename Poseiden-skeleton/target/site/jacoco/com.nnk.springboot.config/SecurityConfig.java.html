@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SecurityConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.config</a> &gt; <span class="el_source">SecurityConfig.java</span></div><h1>SecurityConfig.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.nnk.springboot.services.MyAppUserDetailsService;
+
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
+<span class="nc" id="L17">public class SecurityConfig extends WebSecurityConfigurerAdapter {</span>
+
+	@Autowired
+	private MyAppUserDetailsService myAppUserDetailsService;
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+<span class="nc" id="L24">		http.authorizeRequests().antMatchers(&quot;/bidList/**&quot;, &quot;/rating/**&quot;, &quot;/ruleName/**&quot;, &quot;/trade/**&quot;, &quot;/curvePoint/**&quot;)</span>
+<span class="nc" id="L25">				.hasAnyAuthority(&quot;ADMIN&quot;, &quot;USER&quot;).antMatchers(&quot;/user/**&quot;).permitAll().and().formLogin() // login</span>
+																										// configuration
+<span class="nc" id="L27">				.defaultSuccessUrl(&quot;/bidList/list&quot;).and().logout() // logout configuration</span>
+<span class="nc" id="L28">				.logoutUrl(&quot;/app-logout&quot;).logoutSuccessUrl(&quot;/&quot;).and().exceptionHandling() // exception handling</span>
+																							// configuration
+<span class="nc" id="L30">				.accessDeniedPage(&quot;/app/error&quot;);</span>
+<span class="nc" id="L31">	}</span>
+
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+<span class="nc" id="L35">		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();</span>
+<span class="nc" id="L36">		auth.userDetailsService(myAppUserDetailsService).passwordEncoder(passwordEncoder);</span>
+<span class="nc" id="L37">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
