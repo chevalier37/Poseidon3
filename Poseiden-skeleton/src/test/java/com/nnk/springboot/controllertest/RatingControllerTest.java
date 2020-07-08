@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -19,7 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class BidListControllerTest {
+public class RatingControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -33,28 +32,25 @@ public class BidListControllerTest {
 	}
 
 	@Test
-	@WithUserDetails("user")
-	public void postBidList() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/bidList/add").contentType(MediaType.APPLICATION_JSON)
-				.content("{\"account\":\"testAccount\",\"type\":\"testType\",\"bidQuantity\":5}")
+	public void postRating() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/rating/add").contentType(MediaType.APPLICATION_JSON).content(
+				"{\"moodysRating\":\"moodysRating\",\"sandPRating\":\"sandPRating\",\"fitchRating\":\"fitchRating\", \"orderNumber\":10}")
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isMethodNotAllowed());
 	}
 
 	@Test
-	@WithUserDetails("user")
-	public void updateBidList() throws Exception {
-		this.postBidList();
-		this.mockMvc.perform(MockMvcRequestBuilders.put("/bidList/update/1").contentType(MediaType.APPLICATION_JSON)
-				.content("{\"account\":\"testAccount\",\"type\":\"testType\",\"bidQuantity\":50}")
+	public void getRating() throws Exception {
+		this.postRating();
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/rating/list").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isMethodNotAllowed());
 	}
 
 	@Test
-	@WithUserDetails("user")
-	public void deleteBidList() throws Exception {
-		this.postBidList();
-		this.mockMvc.perform(MockMvcRequestBuilders.delete("/bidList/delete/1").contentType(MediaType.APPLICATION_JSON)
-				.content("{\"account\":\"testAccount\",\"type\":\"testType\",\"bidQuantity\":50}")
+	public void updateRating() throws Exception {
+		this.postRating();
+		this.mockMvc.perform(MockMvcRequestBuilders.put("/rating/update/1").contentType(MediaType.APPLICATION_JSON)
+				.content(
+						"{\"moodysRating\":\"moodysRating\",\"sandPRating\":\"sandPRating\",\"fitchRating\":\"fitchRating\", \"orderNumber\":100}")
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isMethodNotAllowed());
 	}
 
