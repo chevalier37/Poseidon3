@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,17 +31,16 @@ public class RuleNameController {
 
 	@GetMapping("/ruleName/add")
 	public String addRuleForm(RuleName bid) {
-		ruleNameService.addRuleName(bid);
 		return "ruleName/add";
 	}
 
 	@PostMapping("/ruleName/validate")
-	public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
+	public String validate(@Valid @ModelAttribute("ruleName") RuleName ruleName, BindingResult result, Model model) {
 		// TODO: check data valid and save to db, after saving return RuleName list
 		if (!result.hasErrors()) {
 			ruleNameService.addRuleName(ruleName);
 			model.addAttribute("allRuleName", ruleNameService.findAllRuleName());
-			return "redirect:/allRuleName/list";
+			return "redirect:/ruleName/list";
 		}
 		return "ruleName/add";
 	}
@@ -61,9 +61,7 @@ public class RuleNameController {
 		// TODO: check required fields, if valid call service to update RuleName and
 		// return RuleName list
 		if (!result.hasErrors()) {
-			RuleName ruleNameFind = ruleNameService.getRuleNameById(id)
-					.orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
-			ruleNameService.addRuleName(ruleNameFind);
+			ruleNameService.addRuleName(ruleName);
 			model.addAttribute("allRuleName", ruleNameService.findAllRuleName());
 			return "redirect:/ruleName/list";
 		}

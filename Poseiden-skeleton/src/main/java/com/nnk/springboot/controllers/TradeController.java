@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,12 +31,11 @@ public class TradeController {
 
 	@GetMapping("/trade/add")
 	public String addUser(Trade bid) {
-		tradeService.addTrade(bid);
 		return "trade/add";
 	}
 
 	@PostMapping("/trade/validate")
-	public String validate(@Valid Trade trade, BindingResult result, Model model) {
+	public String validate(@Valid @ModelAttribute("trade") Trade trade, BindingResult result, Model model) {
 		// TODO: check data valid and save to db, after saving return Trade list
 		if (!result.hasErrors()) {
 			tradeService.addTrade(trade);
@@ -60,9 +60,7 @@ public class TradeController {
 		// TODO: check required fields, if valid call service to update Trade and return
 		// Trade list
 		if (!result.hasErrors()) {
-			Trade tradeFind = tradeService.getTradeById(id)
-					.orElseThrow(() -> new IllegalArgumentException("Invalid trade Id:" + id));
-			tradeService.addTrade(tradeFind);
+			tradeService.addTrade(trade);
 			model.addAttribute("allTrade", tradeService.findAllTrade());
 			return "redirect:/trade/list";
 		}

@@ -1,4 +1,4 @@
-package com.nnk.springboot.serviceTEST;
+package com.nnk.springboot.servicetest;
 
 import static org.junit.Assert.assertEquals;
 
@@ -62,7 +62,7 @@ public class BidlListTest {
 		BidList bid1 = new BidList("Account Test", "Type Test", 10d);
 		bidListRepository.save(bid1);
 
-		assertEquals("Account Test", bidListService.getBidListById(1).get().getAccount());
+		assertEquals("Account Test", bidListService.getBidListBybidListId(1).get().getAccount());
 	}
 
 	@Test

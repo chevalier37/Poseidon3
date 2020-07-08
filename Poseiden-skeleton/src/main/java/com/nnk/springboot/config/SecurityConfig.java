@@ -15,6 +15,7 @@ import com.nnk.springboot.services.MyAppUserDetailsService;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
 	@Autowired
 	private MyAppUserDetailsService myAppUserDetailsService;
 
@@ -33,16 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		auth.userDetailsService(myAppUserDetailsService).passwordEncoder(passwordEncoder);
-
 	}
 
-	/*
-	 * @Override protected void configure(AuthenticationManagerBuilder auth) throws
-	 * Exception { PasswordEncoder encoder =
-	 * PasswordEncoderFactories.createDelegatingPasswordEncoder();
-	 * auth.inMemoryAuthentication().withUser("user").password(encoder.encode(
-	 * "password")).roles("USER").and()
-	 * .withUser("admin").password(encoder.encode("admin")).roles("USER", "ADMIN");
-	 * }
-	 */
 }

@@ -1,4 +1,4 @@
-package com.nnk.springboot.serviceTEST;
+package com.nnk.springboot.servicetest;
 
 import static org.junit.Assert.assertEquals;
 
@@ -51,7 +51,7 @@ public class CurvePointTest {
 		CurvePoint curvePoint = new CurvePoint(3, 5.0, 6.0);
 		curvePointService.addcurvePoint(curvePoint);
 
-		assertEquals((Object) 3.0, curvePointRepository.findById(1).get().getCurveId());
+		assertEquals((Object) 3, curvePointRepository.findById(1).get().getCurveId());
 	}
 
 	@Test

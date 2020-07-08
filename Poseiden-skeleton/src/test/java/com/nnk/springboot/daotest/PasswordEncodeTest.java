@@ -1,4 +1,4 @@
-package com.nnk.springboot.daoTEST;
+package com.nnk.springboot.daotest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

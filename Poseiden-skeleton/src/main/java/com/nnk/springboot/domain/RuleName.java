@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "rulename")
@@ -15,21 +16,27 @@ public class RuleName {
 	private Integer id;
 
 	@Column(name = "name")
+	@NotBlank(message = "Must not be null")
 	private String name;
 
 	@Column(name = "description")
+	@NotBlank(message = "Must not be null")
 	private String description;
 
 	@Column(name = "json")
+	@NotBlank(message = "Must not be null")
 	private String json;
 
 	@Column(name = "template")
+	@NotBlank(message = "Must not be null")
 	private String template;
 
 	@Column(name = "sqlStr")
+	@NotBlank(message = "Must not be null")
 	private String sqlStr;
 
 	@Column(name = "sqlPart")
+	@NotBlank(message = "Must not be null")
 	private String sqlPart;
 
 	public RuleName(String name, String description, String json, String template, String sqlStr, String sqlPart) {

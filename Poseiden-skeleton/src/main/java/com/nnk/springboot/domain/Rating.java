@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "rating")
@@ -15,15 +17,19 @@ public class Rating {
 	private Integer id;
 
 	@Column(name = "moodysRating")
+	@NotBlank(message = "Must not be null")
 	private String moodysRating;
 
 	@Column(name = "sandPRating")
+	@NotBlank(message = "Must not be null")
 	private String sandPRating;
 
 	@Column(name = "fitchRating")
+	@NotBlank(message = "Must not be null")
 	private String fitchRating;
 
 	@Column(name = "orderNumber")
+	@NotNull(message = "Must not be null")
 	private Integer orderNumber;
 
 	public Rating() {

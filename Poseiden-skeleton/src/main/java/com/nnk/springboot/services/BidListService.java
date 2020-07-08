@@ -23,8 +23,8 @@ public class BidListService {
 		return bidListRepository.save(bid);
 	}
 
-	public Optional<BidList> getBidListById(int id) {
-		return bidListRepository.findById(id);
+	public Optional<BidList> getBidListBybidListId(int id) {
+		return bidListRepository.findByBidListId(id);
 	}
 
 	public void deleteBidList(int id) {

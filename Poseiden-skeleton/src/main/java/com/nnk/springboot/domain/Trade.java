@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "trade")
@@ -17,9 +18,11 @@ public class Trade {
 	private Integer tradeId;
 
 	@Column(name = "account")
+	@NotBlank(message = "Must not be null")
 	private String account;
 
 	@Column(name = "type")
+	@NotBlank(message = "Must not be null")
 	private String type;
 
 	@Column(name = "buyQuantity")

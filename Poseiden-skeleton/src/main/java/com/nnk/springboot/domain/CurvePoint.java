@@ -25,9 +25,11 @@ public class CurvePoint {
 	private Timestamp asOfDate;
 
 	@Column(name = "term")
+	@NotNull(message = "Must not be null")
 	private Double term;
 
 	@Column(name = "value")
+	@NotNull(message = "Must not be null")
 	private Double value;
 
 	@Column(name = "creation_date")

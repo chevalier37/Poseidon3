@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +30,12 @@ public class CurveController {
 
 	@GetMapping("/curvePoint/add")
 	public String addBidForm(CurvePoint bid) {
-		curvePointService.addcurvePoint(bid);
 		return "curvePoint/add";
 	}
 
 	@PostMapping("/curvePoint/validate")
-	public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
+	public String validate(@Valid @ModelAttribute("curvePoint") CurvePoint curvePoint, BindingResult result,
+			Model model) {
 		// TODO: check data valid and save to db, after saving return Curve list
 		if (!result.hasErrors()) {
 			curvePointService.addcurvePoint(curvePoint);
@@ -60,9 +61,7 @@ public class CurveController {
 		// TODO: check required fields, if valid call service to update Curve and return
 		// Curve list
 		if (!result.hasErrors()) {
-			CurvePoint curvePointFind = curvePointService.getCurvePointById(id)
-					.orElseThrow(() -> new IllegalArgumentException("Invalid bidList Id:" + id));
-			curvePointService.addcurvePoint(curvePointFind);
+			curvePointService.addcurvePoint(curvePoint);
 			model.addAttribute("allCurvePoint", curvePointService.findAllcurvePoint());
 			return "redirect:/curvePoint/list";
 		}

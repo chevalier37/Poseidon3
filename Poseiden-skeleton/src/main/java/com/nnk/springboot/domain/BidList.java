@@ -13,9 +13,10 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "bidlist")
 public class BidList {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer BidListId;
+	private Integer bidListId;
 
 	@Column(name = "account")
 	@NotBlank(message = "Account is mandatory")
@@ -92,11 +93,11 @@ public class BidList {
 	}
 
 	public Integer getBidListId() {
-		return BidListId;
+		return bidListId;
 	}
 
-	public void setBidListId(Integer BidListId) {
-		this.BidListId = BidListId;
+	public void setBidListId(Integer bidListId) {
+		this.bidListId = bidListId;
 	}
 
 	public String getAccount() {
@@ -269,7 +270,7 @@ public class BidList {
 
 	@Override
 	public String toString() {
-		return "BidList [BidListId=" + BidListId + ", account=" + account + ", type=" + type + ", bidQuantity="
+		return "BidList [BidListId=" + bidListId + ", account=" + account + ", type=" + type + ", bidQuantity="
 				+ bidQuantity + ", askQuantity=" + askQuantity + ", bid=" + bid + ", ask=" + ask + ", benchmark="
 				+ benchmark + ", bidListDate=" + bidListDate + ", commentary=" + commentary + ", security=" + security
 				+ ", status=" + status + ", trader=" + trader + ", book=" + book + ", creationName=" + creationName

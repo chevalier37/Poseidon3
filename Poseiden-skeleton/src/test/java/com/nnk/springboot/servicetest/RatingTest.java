@@ -1,4 +1,4 @@
-package com.nnk.springboot.serviceTEST;
+package com.nnk.springboot.servicetest;
 
 import static org.junit.Assert.assertEquals;
 

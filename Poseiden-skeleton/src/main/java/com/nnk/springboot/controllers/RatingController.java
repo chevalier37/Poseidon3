@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,12 +31,11 @@ public class RatingController {
 
 	@GetMapping("/rating/add")
 	public String addRatingForm(Rating rating) {
-		ratingService.addRating(rating);
 		return "rating/add";
 	}
 
 	@PostMapping("/rating/validate")
-	public String validate(@Valid Rating rating, BindingResult result, Model model) {
+	public String validate(@Valid @ModelAttribute("rating") Rating rating, BindingResult result, Model model) {
 		// TODO: check data valid and save to db, after saving return Rating list
 		if (!result.hasErrors()) {
 			ratingService.addRating(rating);
@@ -61,8 +61,6 @@ public class RatingController {
 		// TODO: check required fields, if valid call service to update Rating and
 		// return Rating list
 		if (!result.hasErrors()) {
-			Rating ratingFind = ratingService.getRatingById(id)
-					.orElseThrow(() -> new IllegalArgumentException("Invalid rating Id:" + id));
 			ratingService.addRating(rating);
 			model.addAttribute("ratingList", ratingService.findAllRating());
 			return "redirect:/rating/list";

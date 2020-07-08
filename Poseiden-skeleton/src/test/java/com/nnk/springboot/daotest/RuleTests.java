@@ -1,4 +1,4 @@
-package com.nnk.springboot.daoTEST;
+package com.nnk.springboot.daotest;
 
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.repositories.RuleNameRepository;
